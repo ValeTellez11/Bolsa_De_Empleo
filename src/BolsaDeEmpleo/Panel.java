@@ -5,9 +5,11 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.logger.Level;
 import com.j256.ormlite.logger.Logger;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -166,6 +168,23 @@ public class Panel {
                 case 4:
                     System.out.println("Ha seleccionado la opción 4.");
                     // aquí iría el código para la opción 4
+
+                    List<Aspirante> AspirantesOrden = generateParameterOrderLista(listaAspirantes);
+                    int sizeListAspirantes = AspirantesOrden.size();
+
+                    for(int i = 0; i < sizeListAspirantes; i++) {
+
+                        System.out.println("------------------------------------------------------------------------------------------------------------");
+                        System.out.println("C.C                 " + AspirantesOrden.get(i).getCedula());
+                        System.out.println("Nombre              " + AspirantesOrden.get(i).getNombreCompleto());
+                        System.out.println("Edad                " + AspirantesOrden.get(i).getEdad());
+                        System.out.println("Años de experiencia " + AspirantesOrden.get(i).getAnosExperiencia());
+                        System.out.println("Profesión           " + AspirantesOrden.get(i).getProfesion());
+                        System.out.println("Teléfono            " + AspirantesOrden.get(i).getTelefono());
+                    }
+
+
+
                     break;
 
 
@@ -261,10 +280,89 @@ public class Panel {
         } while (opcion != 0);
 
 
+
+
+
         // Cerrar la conexión
         conexion.close();
 
 
+    }
+
+    public static List<Aspirante> ordenarLista(String field, Boolean order, Dao<Aspirante, String> listaAspirantes) throws SQLException {
+        QueryBuilder<Aspirante, String> qb = listaAspirantes.queryBuilder();
+
+        //genera la query que nos permita ordenar por el campo seleccionado y con el parametro
+        //"forma" decir si se ordena de manera ASC = true  o DESC = false
+        switch (field) {
+            case "anosExperiencia":
+                qb.orderBy("anosExperiencia",order);
+                break;
+            case "edad":
+                qb.orderBy("edad",order);
+                break;
+            case "profesion":
+                qb.orderBy("profesion",order);
+                break;
+            default:
+                qb.orderBy("anosExperiencia",order);
+        }
+
+        List<Aspirante> Aspirantes = qb.query();
+
+        return  Aspirantes;
+    }
+
+    public static List<Aspirante> generateParameterOrderLista(Dao<Aspirante, String> listaAspirantes) throws SQLException {
+
+        Scanner Teclado = new Scanner(System.in);
+
+        System.out.println("----- ¿Cómo queries ordenarla lista? -----");
+        System.out.println("1. Por Años de experiencia de manera ASCENDENTE");
+        System.out.println("2. Por Años de experiencia de manera DSCENDENTE");
+        System.out.println("3. Por Edad de manera ASCENDENTE");
+        System.out.println("4. Por Edad de manera DSCENDENTE");
+        System.out.println("5. Por Profesión de manera ASCENDENTE");
+        System.out.println("6. Por Profesión de manera DSCENDENTE");
+
+        int opcionSelccoinada = 1;
+        opcionSelccoinada = Teclado.nextInt();
+
+        boolean order = true;
+        String field = "anosExperiencia";
+
+        switch (opcionSelccoinada) {
+            case 1:
+                //
+                field = "anosExperiencia";
+                order = true;
+                break;
+            case 2:
+                field = "anosExperiencia";
+                order = false;
+                break;
+            case 3:
+                field = "edad";
+                order = true;
+                break;
+            case 4:
+                field = "edad";
+                order = false;
+                break;
+            case 5:
+                field = "profesion";
+                order = true;
+                break;
+            case 6:
+                field = "profesion";
+                order = false;
+                break;
+
+        }
+
+        List<Aspirante> Aspirante = ordenarLista(field, order, listaAspirantes);
+
+        return Aspirante;
     }
 }
 
