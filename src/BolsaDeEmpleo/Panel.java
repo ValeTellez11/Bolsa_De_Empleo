@@ -170,14 +170,48 @@ public class Panel {
 
 
                 case 5:
-                    System.out.println("Ha seleccionado la opción 5.");
-                    // aquí iría el código para la opción 5
+                    System.out.println("5. Consultar el aspirante con mayor experiencia.");
+
+                    // inicializamos una variable aspiranteMayorExperiencia en null.
+                    // Luego, itera a través de la lista de aspirantes y compara los años
+                    // de experiencia de cada aspirante con los años de experiencia del
+                    // aspirante con mayor experiencia encontrado hasta el momento.
+
+                    Aspirante aspiranteMayorExperiencia = null;
+                    for (Aspirante aspirante4 : listaAspirantes) {
+                        if (aspiranteMayorExperiencia == null || aspirante4.getAnosExperiencia() > aspiranteMayorExperiencia.getAnosExperiencia()) {
+                            aspiranteMayorExperiencia = aspirante4;
+                        }
+                    }
+                    if (aspiranteMayorExperiencia == null) {
+                        System.out.println("No se encontraron aspirantes en la lista.");
+                    } else {
+                        System.out.println("El aspirante con mayor experiencia es: " + aspiranteMayorExperiencia.getNombreCompleto() + " con " + aspiranteMayorExperiencia.getAnosExperiencia() + " años de experiencia.");
+                    }
+
                     break;
 
 
                 case 6:
-                    System.out.println("Ha seleccionado la opción 6.");
-                    // aquí iría el código para la opción 6
+
+                    System.out.println("6. Consultar el aspirante más joven. ");
+
+                    //inicializamos una variable aspiranteMasJoven en null.
+                    // Luego, itera a través de la lista de aspirantes y compara la edad de cada aspirante
+                    // con la edad del aspirante más joven encontrado hasta el momento.
+
+                    Aspirante aspiranteMasJoven = null;
+                    for (Aspirante aspirante5 : listaAspirantes) {
+                        if (aspiranteMasJoven == null || aspirante5.getEdad() < aspiranteMasJoven.getEdad()) {
+                            aspiranteMasJoven = aspirante5;
+                        }
+                    }
+                    if (aspiranteMasJoven == null) {
+                        System.out.println("No se encontraron aspirantes en la lista.");
+                    } else {
+                        System.out.println("El aspirante más joven es: " + aspiranteMasJoven.getNombreCompleto() + " con " + aspiranteMasJoven.getEdad() + " años.");
+                    }
+
                     break;
 
 
@@ -193,9 +227,23 @@ public class Panel {
                     break;
 
 
+
                 case 9:
-                    System.out.println("Ha seleccionado la opción 9.");
-                    // aquí iría el código para la opción 9
+                    System.out.println("9. Presentar el promedio de edad de los aspirantes.");
+                    //Lo que hace este código es inicializar dos variables, totalEdades y numAspirantes, en cero.
+                    // Luego, itera a través de la lista de aspirantes y agrega la edad de cada aspirante
+                    // a la variable totalEdades, y aumenta la variable numAspirantes en uno por cada aspirante.
+
+                    int totalEdades = 0;
+                    int numAspirantes = 0;
+
+                    for (Aspirante aspirante8 : listaAspirantes) {
+                        totalEdades += aspirante8.getEdad();
+                        numAspirantes++;
+                    }
+                    double promedioEdad = (double) totalEdades / numAspirantes;
+                    System.out.println("El promedio de edad de los aspirantes es: " + promedioEdad);
+
                     break;
 
 
